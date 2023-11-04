@@ -1,11 +1,11 @@
 [package]
-name = "Prelim-Support"
+name = "PrelimSupport"
 version = "1.2.4"
 authors = ["rustdesk <info@rustdesk.com>"]
 edition = "2021"
 build= "build.rs"
 description = "Prelim remote support tool"
-default-run = "Prelim-Support"
+default-run = "PrelimSupport"
 
 [lib]
 name = "librustdesk"
@@ -170,7 +170,7 @@ os-version = "0.2"
 hound = "3.5"
 
 [package.metadata.bundle]
-name = "Prelim-Support"
+name = "PrelimSupport"
 identifier = "com.carriez.rustdesk"
 icon = ["res/32x32.png", "res/128x128.png", "res/128x128@2x.png"]
 osx_minimum_system_version = "10.14"
