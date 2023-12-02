@@ -959,7 +959,6 @@ class CustomAlertDialog extends StatelessWidget {
 void msgBox(SessionID sessionId, String type, String title, String text,
     String link, OverlayDialogManager dialogManager,
     {bool? hasCancel, ReconnectHandle? reconnect, int? reconnectTimeout}) {
-
   dialogManager.dismissAll();
   List<Widget> buttons = [];
   bool hasOk = false;
@@ -2699,13 +2698,16 @@ Future<List<Rect>> getScreenRectList() async {
       : await getScreenListNotWayland();
 }
 
-openMonitorInTheSameTab(int i, FFI ffi, PeerInfo pi) {
+openMonitorInTheSameTab(int i, FFI ffi, PeerInfo pi, {bool updateCursorPos = true}) {
   final displays = i == kAllDisplayValue
       ? List.generate(pi.displays.length, (index) => index)
       : [i];
   bind.sessionSwitchDisplay(
-      sessionId: ffi.sessionId, value: Int32List.fromList(displays));
-  ffi.ffiModel.switchToNewDisplay(i, ffi.sessionId, ffi.id);
+    isDesktop: isDesktop,
+    sessionId: ffi.sessionId,
+    value: Int32List.fromList(displays),
+  );
+  ffi.ffiModel.switchToNewDisplay(i, ffi.sessionId, ffi.id, updateCursorPos: updateCursorPos);
 }
 
 // Open new tab or window to show this monitor.
@@ -2765,6 +2767,8 @@ parseParamScreenRect(Map<String, dynamic> params) {
   }
   return screenRect;
 }
+
+get isInputSourceFlutter => stateGlobal.getInputSource() == "Input source 2";
 
 class _ReconnectCountDownButton extends StatefulWidget {
   _ReconnectCountDownButton({
